@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../services/app_state.dart';
 import '../widgets/notification_bell.dart';
+import '../services/location_service.dart';
 import '../services/user_state.dart';
 import 'sos_tab.dart';
 import 'community_tab.dart';
@@ -25,14 +26,14 @@ class HomeScreenState extends State<HomeScreen>
   String? _pendingCategory;
 
   static const _categories = [
-    {'label': 'Accident', 'emoji': '🚗'},
-    {'label': 'Fire', 'emoji': '🔥'},
-    {'label': 'Flood', 'emoji': '🌊'},
-    {'label': 'Quake', 'emoji': '⚠️'},
-    {'label': 'Robbery', 'emoji': '🚗'},
-    {'label': 'Assault', 'emoji': '🚒'},
-    {'label': 'Medical', 'emoji': '💊'},
-    {'label': 'Other', 'emoji': '🚨'},
+    {'label': 'Accident', 'image': 'assets/images/Accident.png'},
+    {'label': 'Fire', 'image': 'assets/images/Fire.png'},
+    {'label': 'Flood', 'image': 'assets/images/Flood.png'},
+    {'label': 'Quake', 'image': 'assets/images/Quake.png'},
+    {'label': 'Robbery', 'image': 'assets/images/Robbery.png'},
+    {'label': 'Assault', 'image': 'assets/images/Assault.png'},
+    {'label': 'Medical', 'image': 'assets/images/Medical.png'},
+    {'label': 'Other', 'image': 'assets/images/Other.png'},
   ];
 
   @override
@@ -76,12 +77,25 @@ class HomeScreenState extends State<HomeScreen>
                 mode: EmergencyScreenMode.fromSOS)));
   }
 
-  // Use Current Location / Setup Location
+  // Use Current Location / Setup Location — tries real GPS first, falls back to map picker
   Future<void> _setLocation() async {
-    final result = await Navigator.push<String>(
-        context, MaterialPageRoute(builder: (_) => const MapPickerScreen()));
-    if (result != null && result.isNotEmpty) {
-      AppState().setLocation(result);
+    // Try real GPS
+    final pos = await LocationService().getCurrentPosition();
+    dynamic result;
+    if (pos != null) {
+      result = await LocationService().getAddressFromPosition(pos);
+    } else {
+      // Fall back to map picker
+      result = await Navigator.push<Map<String, dynamic>>(
+          context, MaterialPageRoute(builder: (_) => const MapPickerScreen()));
+    }
+
+    String? addr;
+    if (result is String) addr = result;
+    if (result is Map<String, dynamic>) addr = result['address'] as String?;
+
+    if (addr != null && addr.isNotEmpty) {
+      AppState().setLocation(addr);
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             content: Text(
@@ -300,7 +314,7 @@ class HomeScreenState extends State<HomeScreen>
                   final item = _categories[row * 4 + col];
                   return _CategoryTile(
                       label: item['label']!,
-                      emoji: item['emoji']!,
+                      imagePath: item['image']!,
                       onTap: () => switchToSOS(category: item['label']));
                 })),
             if (row == 0) const SizedBox(height: 12),
@@ -400,10 +414,10 @@ class _Ring extends StatelessWidget {
 }
 
 class _CategoryTile extends StatelessWidget {
-  final String label, emoji;
+  final String label, imagePath;
   final VoidCallback onTap;
   const _CategoryTile(
-      {required this.label, required this.emoji, required this.onTap});
+      {required this.label, required this.imagePath, required this.onTap});
   @override
   Widget build(BuildContext context) {
     final w = (MediaQuery.of(context).size.width - 40 - 24) / 4;
@@ -413,20 +427,29 @@ class _CategoryTile extends StatelessWidget {
             width: w,
             child: Column(children: [
               Container(
-                  width: w,
-                  height: w * 0.75,
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(12),
-                      boxShadow: [
-                        BoxShadow(
-                            color: Colors.black.withOpacity(0.05),
-                            blurRadius: 8,
-                            offset: const Offset(0, 2))
-                      ]),
-                  child: Center(
-                      child:
-                          Text(emoji, style: TextStyle(fontSize: w * 0.38)))),
+                width: w,
+                height: w * 0.75,
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(12),
+                    boxShadow: [
+                      BoxShadow(
+                          color: Colors.black.withOpacity(0.05),
+                          blurRadius: 8,
+                          offset: const Offset(0, 2))
+                    ]),
+                child: Center(
+                    child: Padding(
+                        padding: const EdgeInsets.all(14),
+                        child: Image.asset(
+                          imagePath,
+                          fit: BoxFit.contain,
+                          errorBuilder: (_, __, ___) => const Icon(
+                            Icons.image_not_supported_outlined,
+                            color: Color(0xFF8E8E93),
+                          ),
+                        ))),
+              ),
               const SizedBox(height: 6),
               Text(label,
                   style: GoogleFonts.inter(

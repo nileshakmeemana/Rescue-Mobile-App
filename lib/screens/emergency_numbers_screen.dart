@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../services/app_state.dart';
 import '../widgets/notification_bell.dart';
 import 'home_screen.dart';
@@ -12,17 +13,21 @@ class EmergencyNumbersScreen extends StatelessWidget {
   const EmergencyNumbersScreen({super.key,
       this.mode = EmergencyScreenMode.fromSubmit});
 
-  void _callNumber(BuildContext ctx, String number) {
-    ScaffoldMessenger.of(ctx).showSnackBar(SnackBar(
-      content: Text('Calling $number...',
-          style: GoogleFonts.inter(fontWeight: FontWeight.w600)),
-      backgroundColor: const Color(0xFFE53935),
-      behavior: SnackBarBehavior.floating,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      duration: const Duration(seconds: 2),
-    ));
-
-    if (mode == EmergencyScreenMode.fromSOS) {
+  Future<void> _callNumber(BuildContext ctx, String number) async {
+    final clean = number.replaceAll(RegExp(r'[^0-9+]'), '');
+    final uri = Uri.parse('tel:$clean');
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(uri);
+    } else {
+      ScaffoldMessenger.of(ctx).showSnackBar(SnackBar(
+        content: Text('Calling $number...',
+            style: GoogleFonts.inter(fontWeight: FontWeight.w600)),
+        backgroundColor: const Color(0xFFE53935),
+        behavior: SnackBarBehavior.floating,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        duration: const Duration(seconds: 2)));
+    }
+    if (mode == EmergencyScreenMode.fromSOS && ctx.mounted) {
       Future.delayed(const Duration(seconds: 2), () {
         if (ctx.mounted) {
           Navigator.push(ctx, MaterialPageRoute(

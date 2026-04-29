@@ -71,7 +71,7 @@ class CommunityTab extends StatelessWidget {
                       const NotificationBell(),
                     ]))),
 
-            /*SliverToBoxAdapter(
+            SliverToBoxAdapter(
                 child: Padding(
                     padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
                     child: Text('Posts',
@@ -110,7 +110,9 @@ class CommunityTab extends StatelessWidget {
                                       fontSize: 14,
                                       color: const Color(0xFF8E8E93)),
                                   textAlign: TextAlign.center),
-                            ]));
+                            ]
+                            )
+                            );
                       }
                       return Padding(
                           padding: const EdgeInsets.fromLTRB(20, 12, 20, 0),
@@ -142,8 +144,12 @@ class CommunityTab extends StatelessWidget {
                                             builder: (_) =>
                                                 CommunityPostDetailScreen(
                                                     post: post))));
-                              }));
-                    })),
+                              }
+                              )
+                              );
+                    }
+                    )
+                    ),
 
             SliverToBoxAdapter(
                 child: Padding(
@@ -167,12 +173,14 @@ class CommunityTab extends StatelessWidget {
                             crossAxisSpacing: 12,
                             mainAxisSpacing: 12,
                             childAspectRatio: 1.1))),
-          ])),
+          ]
+          )
+          ),
         );
       },
     );
   }
-}*/
+}
 
 class _PostCard extends StatelessWidget {
   final Map<String, dynamic> post;
@@ -249,13 +257,17 @@ class _PostCard extends StatelessWidget {
                               builder: (_) => AlertDialog(
                                       shape: RoundedRectangleBorder(
                                           borderRadius:
-                                              BorderRadius.circular(16)),
+                                              BorderRadius.circular(16)
+                                              ),
                                       title: Text('Delete Post',
                                           style: GoogleFonts.inter(
-                                              fontWeight: FontWeight.w700)),
+                                              fontWeight: FontWeight.w700)
+                                              ),
                                       content: Text('Remove this post?',
                                           style: GoogleFonts.inter(
-                                              color: const Color(0xFF8E8E93))),
+                                              color: const Color(0xFF8E8E93)
+                                              )
+                                              ),
                                       actions: [
                                         TextButton(
                                             onPressed: () =>
@@ -263,7 +275,9 @@ class _PostCard extends StatelessWidget {
                                             child: Text('Cancel',
                                                 style: GoogleFonts.inter(
                                                     color: const Color(
-                                                        0xFF8E8E93)))),
+                                                        0xFF8E8E93))
+                                                        )
+                                                        ),
                                         ElevatedButton(
                                             onPressed: () {
                                               Navigator.pop(context);
@@ -340,5 +354,7 @@ class _AdCard extends StatelessWidget {
                 fontSize: 12,
                 fontWeight: FontWeight.w600,
                 color: Colors.white)),
-      ]));
+      ]
+      )
+      );
 }

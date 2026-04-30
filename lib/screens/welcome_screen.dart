@@ -3,6 +3,11 @@ import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'home_screen.dart';
 
+// ─────────────────────────────────────────────────────────────────────────────
+// WELCOME SCREEN — after PIN generation
+// Image 1: "Rescue" top · pink blob · man character · 
+//          "One App for Every Emergency" · dot indicators · Get Started button
+// ─────────────────────────────────────────────────────────────────────────────
 class WelcomeScreen extends StatefulWidget {
   const WelcomeScreen({super.key});
 

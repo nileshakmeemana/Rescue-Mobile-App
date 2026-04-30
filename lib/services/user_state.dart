@@ -7,20 +7,34 @@ class UserState extends ChangeNotifier {
   factory UserState() => _i;
   UserState._();
 
-  // Profile image — null means no custom image (show icon)
-  MemoryImage? _profileImage;
-  MemoryImage? get profileImage => _profileImage;
+  static const String _defaultName = 'Nilesh Akmeemana';
+  static const ImageProvider _defaultProfileImage =
+      AssetImage('assets/images/user.png');
 
-  String _name = 'Nilesh Akmeemana';
+  ImageProvider? _profileImage = _defaultProfileImage;
+  ImageProvider? get profileImage => _profileImage;
+
+  String _name = _defaultName;
   String get name => _name;
 
-  void setProfileImage(MemoryImage img) {
+  void setProfileImage(ImageProvider img) {
     _profileImage = img;
     notifyListeners();
   }
 
   void setName(String n) {
     _name = n;
+    notifyListeners();
+  }
+
+  void clearProfileImage() {
+    _profileImage = _defaultProfileImage;
+    notifyListeners();
+  }
+
+  void reset() {
+    _profileImage = _defaultProfileImage;
+    _name = _defaultName;
     notifyListeners();
   }
 }

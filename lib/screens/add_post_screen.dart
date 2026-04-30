@@ -5,7 +5,8 @@ import 'package:image_picker/image_picker.dart';
 import '../services/app_state.dart';
 import '../services/firebase_service.dart';
 import '../widgets/notification_bell.dart';
-
+import 'map_picker_screen.dart';
+import 'help_coming_screen.dart';
 
 class AddPostScreen extends StatefulWidget {
   const AddPostScreen({super.key});
@@ -125,7 +126,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
         mediaUrls.add(url);
       }
 
-      /*await FirebaseService().addPost(
+      await FirebaseService().addPost(
         title: _titleCtrl.text.trim(),
         description: _descCtrl.text.trim().isNotEmpty
             ? _descCtrl.text.trim()
@@ -141,7 +142,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
         title: 'Post Published',
         message: '"${_titleCtrl.text.trim()}" posted to the community.',
         region: AppState().region.isEmpty ? 'Colombo' : AppState().region,
-      );*/
+      );
 
       if (!mounted) return;
       Navigator.pushReplacement(

@@ -11,7 +11,7 @@ class AppNotification {
 const Map<String, List<Map<String, String>>> _regionNumbers = {
   'Colombo': [
     {'number': '119',         'label': 'Sri Lanka Police – Colombo'},
-    {'number': '1990',        'label': 'Suwaseriya Ambulance'},
+    {'number': '1990',        'label': 'Suwaseriya Ambulanceee'},
     {'number': '110',         'label': 'Fire & Rescue – Colombo'},
     {'number': '011-2691111', 'label': 'National Hospital Colombo'},
     {'number': '011-2432682', 'label': 'Army Head Quarter'},

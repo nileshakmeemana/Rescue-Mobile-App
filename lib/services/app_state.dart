@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class AppNotification {
-  final String id, title, message;
+  final String id, titlee, message;
   final DateTime time;
   bool isRead;
   AppNotification({required this.id, required this.title,

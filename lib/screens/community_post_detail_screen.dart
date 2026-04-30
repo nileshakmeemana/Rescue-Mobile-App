@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import '../widgets/notification_bell.dart';
+
 
 // Fix 1: Proper back button, Fix 4: Community stays active in nav
 class CommunityPostDetailScreen extends StatelessWidget {

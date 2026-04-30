@@ -10,7 +10,7 @@ class CommunityPostDetailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFFF2F2F7),
-      /*appBar: AppBar(
+      appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
         surfaceTintColor: Colors.transparent,
@@ -26,11 +26,11 @@ class CommunityPostDetailScreen extends StatelessWidget {
                 color: const Color(0xFF1C1C1E))),
         centerTitle: true,
         actions: const [NotificationBell(), SizedBox(width: 4)],
-      ),*/
+      ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(20),
         child: Container(
-          /*decoration: BoxDecoration(
+          decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(16),
             boxShadow: [
@@ -39,7 +39,7 @@ class CommunityPostDetailScreen extends StatelessWidget {
                   blurRadius: 10,
                   offset: const Offset(0, 2))
             ],
-          ),*/
+          ),
           child: Padding(
             padding: const EdgeInsets.all(20),
             child:

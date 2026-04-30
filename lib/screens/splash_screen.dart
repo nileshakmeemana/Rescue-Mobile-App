@@ -32,7 +32,7 @@ class _SplashScreenState extends State<SplashScreen>
     _fade = CurvedAnimation(parent: _ctrl, curve: Curves.easeIn);
     _ctrl.forward();
 
-    
+    // After splash delay, route based on auth state
     Future.delayed(const Duration(milliseconds: 2200), _route);
   }
 

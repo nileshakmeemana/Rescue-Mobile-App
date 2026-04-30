@@ -372,7 +372,7 @@ class _SettingsTile extends StatelessWidget {
                         style: GoogleFonts.inter(
                             fontSize: 12,
                             color: const Color(0xFF8E8E93),
-                            height: 1.4)),
+                             profile tab, height: 1.4)),
                   ],
                 ])),
             trailing,
